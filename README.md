@@ -1,9 +1,8 @@
 <p align="center">
-  <strong>
-    # SIMAVID
-    # Sistem Informasi COVID-19
-  </strong>
-</>
+##    SIMAVID
+## Sistem Informasi COVID-19
+
+</p>
 
 
 
