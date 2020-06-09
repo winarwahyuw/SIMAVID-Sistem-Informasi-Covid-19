@@ -1,8 +1,9 @@
+import './components/case-item.js';
+import './components/search-bar.js';
+
 function main(){
 
     const baseUrl="https://covid19.mathdro.id/api";
-    const API_KEY="5ec518cd0e3a58bbeb7141f9a3e8be78";
-    const movieUrl="https://api.themoviedb.org/3/discover/movie?api_key=5ec518cd0e3a58bbeb7141f9a3e8be78&language=en-US&page=1";
 
     const getGlobalCases=()=>{
         //panggil fetch
@@ -17,7 +18,7 @@ function main(){
                 renderConfirmedCases(responseJson.confirmed);
                 renderRecoveredCases(responseJson.recovered);
                 renderDeathCases(responseJson.deaths);
-                renderImage(responseJson.image);
+                renderLastUpdateCases(responseJson.lastUpdate);
             }
         })
         .catch(error=>{
@@ -27,52 +28,111 @@ function main(){
 
     //global confirmed cases
     const renderConfirmedCases=(cases)=>{
-        const listCaseElement=document.querySelector("#globalConfirmed");
-        listCaseElement.innerHTML+=`
-                                <div>
-                                <h5>Confirmed</h5>
-                                <p>${cases.value}</p>
-                                <p>${cases.detail}</p>
-                                </div>
-                                `;
+        const itemElement=document.querySelector("#globalConfirmed"); 
+        const caseItem=document.createElement("case-item");
+        caseItem.confirmedValue=cases;
+        itemElement.appendChild(caseItem);
     };
 
     const renderRecoveredCases=(cases)=>{
-        const itemElement=document.querySelector("#globalConfirmed");
-        itemElement.innerHTML +=`
-                                <div>
-                                <h5>Recovered</h5>
-                                <p>${cases.value}</p>
-                                <p>${cases.detail}</p>
-                                </div>
-                                `;
+        const itemElement=document.querySelector("#globalRecovered");
+        const caseItem=document.createElement("case-item");
+        caseItem.recoveredValue=cases;
+        itemElement.appendChild(caseItem);  
     }
 
     const renderDeathCases=(cases)=>{
-        const itemElement=document.querySelector("#globalConfirmed");
-        itemElement.innerHTML +=`
-                                <div>
-                                <h5>Deaths</h5>
-                                <p>${cases.value}</p>
-                                <p>${cases.detail}</p>
-                                </div>
-                                `;
+        const itemElement=document.querySelector("#globalDeaths");
+        const caseItem=document.createElement("case-item");
+        caseItem.deathValue=cases;
+        itemElement.appendChild(caseItem);  
     }
 
-    const renderImage=(cases)=>{
-        const itemElement=document.querySelector("#globalConfirmed");
-        itemElement.innerHTML +=`
-                                <div>
-                                    <img src="${cases}" alt="Grafik" width="100%">
-                                </div>
-                                `;
+    const renderLastUpdateCases=(cases)=>{
+        const itemElement=document.querySelector("#globalLastUpdate");
+        const msec=Date.parse(cases);
+        const lastUpdate=new Date(msec);
+        itemElement.innerHTML=` 
+                        <p class="last-update">Last Update : ${lastUpdate}</p>
+                    `; 
     }
+
     const showResponseMessage=(message= "It's not us, It's your connection!")=>{
         alert(message);
     }
 
-    //panggil fungsi data
-    getGlobalCases();
+    //panggil
+    getGlobalCases();   
+
+
+    //untuk Country
+    const baseUrlCountry="https://covid19.mathdro.id/api/countries";
+    const searchElement=document.querySelector("search-bar");
+    
+    const getCountryCases=(key)=>{
+        return fetch(`${baseUrlCountry}/${key}`)
+        .then(response=>{
+            return response.json();
+        })
+        .then(responseJson=>{
+            if(responseJson.error){
+                showResponseMessage(error);
+            }else{
+                renderConfirmed(responseJson.confirmed);
+                renderRecovered(responseJson.recovered);
+                renderDeaths(responseJson.deaths);
+                renderLastUpdate(responseJson.lastUpdate);
+            }
+        })
+        .catch(error=>{
+            showResponseMessage(error.message);
+        })
+    }
+
+    const renderConfirmed=(cases)=>{
+        const listCaseElement=document.querySelector("#countriesConfirmed");
+        const caseItem=document.createElement("case-item");
+        caseItem.confirmedValue=cases;
+        listCaseElement.appendChild(caseItem);
+    }
+
+    const renderRecovered=(cases)=>{
+        const listCaseElement=document.querySelector("#countriesRecovered");
+        const caseItem=document.createElement("case-item");
+        caseItem.recoveredValue=cases;
+        listCaseElement.appendChild(caseItem);           
+    }
+
+    const renderDeaths=(cases)=>{
+        const itemElement=document.querySelector("#countriesDeaths");
+        const caseItem=document.createElement("case-item");
+        caseItem.deathValue=cases;
+        itemElement.appendChild(caseItem);     
+    }
+
+    const renderMainResult=(key)=>{
+        const itemElement=document.querySelector("#searchResult");
+        itemElement.innerHTML=`
+                        <p class="title">${key}</p>
+                    `; 
+    }
+
+    const renderLastUpdate=(cases)=>{
+        const itemElement=document.querySelector("#countriesLastUpdate");
+        const msec=Date.parse(cases);
+        const lastUpdate=new Date(msec);
+        itemElement.innerHTML=` 
+                        <p class="last-update">Last Update : ${lastUpdate}</p>
+                    `; 
+    }
+
+    const btnSearchClicked=()=>{
+        getCountryCases(searchElement.value);  
+        renderMainResult(searchElement.value);      
+    }
+
+    searchElement.buttonClicked=btnSearchClicked;
+  
 }
 
 export default main;
