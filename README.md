@@ -4,9 +4,6 @@ Dibuat untuk submission Belajar Pemrograman Front End Web Development DICODING
 
 # Tentang
 Aplikasi web yang menyediakan data COVID-19 global terbaru
-
-##
-
 - Menggunakan standar ES6 dalam menuliskan kode JavaScript
 - Terdapat minimal satu penerapan custom element
 - Menggunakan Webpack sebagai module bundler (tahap production) 
