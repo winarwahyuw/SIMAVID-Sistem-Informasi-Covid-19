@@ -1,8 +1,8 @@
 # SIMAVID (Sistem Informasi Covid-19)
-#### Dibuat untuk submission Belajar Pemrograman Front End Web Development DICODING
+Dibuat untuk submission Belajar Pemrograman Front End Web Development DICODING
 ##
 
-## Tentang
+# Tentang
 Aplikasi web yang menyediakan data COVID-19 global terbaru
 
 ##
