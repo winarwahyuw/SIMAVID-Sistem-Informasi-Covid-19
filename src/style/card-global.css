@@ -1,0 +1,36 @@
+.card-global{
+    width: 100%;
+    height:fit-content;
+    border-radius: 25px;
+    border-width: 3px;
+    border-color: rgb(167, 167, 167);
+    box-shadow: 2px 2px 2px rgb(167, 167, 167);
+    background-color: white;
+    margin-bottom: 35px;
+    overflow: auto;
+    padding: 25px;
+}
+
+.card-global .sub-title{
+    font-size: 20pt;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.card-global p strong{
+    color: #1de9b6;
+}
+
+.card-case{
+    width: 100%;
+    height: 200px;
+    border-radius: 25px;
+    border-width: 3px;
+    border-color: rgb(167, 167, 167);
+    box-shadow: 2px 2px 2px rgb(167, 167, 167);
+    background-color: white;
+    margin-bottom: 25px;
+    overflow: hidden;
+    padding: 25px;
+}
